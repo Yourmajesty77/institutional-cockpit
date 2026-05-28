@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutional Analytics Cockpit</title>
+    <!-- Tailwind CSS Engine CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans p-6 selection:bg-teal-500/30">
+
+    <header class="max-w-7xl mx-auto mb-8 border-b border-slate-800 pb-6 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-black tracking-tight text-white uppercase">Institutional Analytics Cockpit</h1>
+            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">XAU/USD London Reversal System Architecture</p>
+        </div>
+        <div class="text-right">
+            <span class="text-xs font-mono px-3 py-1 bg-slate-900 border border-slate-800 rounded text-teal-400">System Clock: IST (UTC+5:30)</span>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+        
+        <!-- DASHBOARD STATUS MATRIX -->
+        <section class="lg:col-span-4 grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded">
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Tracking Protocol</p>
+                <p id="statDays" class="text-2xl font-black text-white mt-1 font-mono">0<span class="text-xs text-slate-500"> / 90 Days</span></p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded">
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Simulated Allocation</p>
+                <p id="statBalance" class="text-2xl font-black text-emerald-400 mt-1 font-mono">$5,000.00</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded">
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Current Win Rate</p>
+                <p id="statWinRate" class="text-2xl font-black text-teal-400 mt-1 font-mono">0.0%</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded">
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Compliance Streak</p>
+                <p id="statStreak" class="text-2xl font-black text-teal-400 mt-1 font-mono">0 Days</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded col-span-2 md:col-span-1">
+                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Infractions Logged</p>
+                <p id="statInfractions" class="text-2xl font-black text-slate-400 mt-1 font-mono">0</p>
+            </div>
+        </section>
+
+        <!-- DATA CAPTURE FORM -->
+        <section class="lg:col-span-1 bg-slate-900 border border-slate-800 p-5 rounded h-fit">
+            <h2 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Session Input</h2>
+            <form id="logForm" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-slate-400 font-medium mb-1 uppercase">Metric Calendar Date</label>
+                    <input type="date" id="fDate" required class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white font-mono focus:outline-none focus:border-teal-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-slate-400 font-medium mb-1 uppercase">Asian High ($)</label>
+                        <input type="number" step="0.01" id="fHigh" required placeholder="2350.00" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white font-mono focus:outline-none focus:border-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-medium mb-1 uppercase">Asian Low ($)</label>
+                        <input type="number" step="0.01" id="fLow" required placeholder="2330.00" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white font-mono focus:outline-none focus:border-teal-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-slate-400 font-medium mb-1 uppercase">Liquidity Sweep Status</label>
+                    <select id="fSweep" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white focus:outline-none focus:border-teal-500">
+                        <option value="No Sweep">No Sweep Detected</option>
+                        <option value="Buy-Side Sweep">Buy-Side Sweep (High)</option>
+                        <option value="Sell-Side Sweep">Sell-Side Sweep (Low)</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-slate-400 font-medium mb-1 uppercase">1m MSS Printed</label>
+                        <select id="fMss" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white focus:outline-none focus:border-teal-500">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 font-medium mb-1 uppercase">FVG Presence</label>
+                        <select id="fFvg" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white focus:outline-none focus:border-teal-500">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-slate-400 font-medium mb-1 uppercase">Real-Time Outcome</label>
+                    <select id="fOutcome" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white focus:outline-none focus:border-teal-500">
+                        <option value="No Setup">No Setup / Range Intact</option>
+                        <option value="Win (+1.5%)">Win (+1.5%) [1:3 RR]</option>
+                        <option value="Loss (-0.5%)">Loss (-0.5%)</option>
+                        <option value="Missed Entry">Missed Entry Execution</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-400 font-medium mb-1 uppercase text-rose-400">Infraction Check</label>
+                    <select id="fInfraction" class="w-full bg-slate-950 border border-slate-800 rounded p-2 text-white focus:outline-none focus:border-rose-500">
+                        <option value="Pass">Pass (Perfect Discipline)</option>
+                        <option value="Fail">Fail (Panel Clicked / Overtraded)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold uppercase py-2.5 rounded transition tracking-wider">Commit Entry to DB</button>
+            </form>
+            <button onclick="clearDB()" class="w-full text-[10px] text-slate-500 hover:text-rose-400 uppercase tracking-widest mt-6 block text-center transition">Purge History</button>
+        </section>
+
+        <!-- TERMINAL ARCHIVE REPOSITORY -->
+        <section class="lg:col-span-3 bg-slate-900 border border-slate-800 p-5 rounded overflow-x-auto">
+            <h2 class="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Stored Engine Records</h2>
+            <div id="tableContainer">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- SYSTEM DATABASE APPLICATION SCRIPT -->
+    <script>
+        let db = JSON.parse(localStorage.getItem('trading_cockpit_db')) || [];
+        document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+
+        function renderAll() {
+            localStorage.setItem('trading_cockpit_db', JSON.stringify(db));
+            
+            // Core Metrics Calculus
+            const initialBalance = 5000;
+            let balance = initialBalance;
+            let wins = 0, losses = 0, infractions = 0, streak = 0, broken = false;
+
+            db.forEach(log => {
+                if(log.outcome === 'Win (+1.5%)') { balance += (balance * 0.015); wins++; }
+                if(log.outcome === 'Loss (-0.5%)') { balance -= (balance * 0.005); losses++; }
+                if(log.infraction === 'Fail') infractions++;
+            });
+
+            // Calculate current unbroken compliance streak
+            for (let i = db.length - 1; i >= 0; i--) {
+                if (db[i].infraction === 'Fail') { streak = 0; } else { streak++; }
+            }
+
+            const totalTrades = wins + losses;
+            const winRate = totalTrades > 0 ? ((wins / totalTrades) * 100).toFixed(1) : '0.0';
+
+            // DOM Performance Mapping
+            document.getElementById('statDays').innerHTML = `${db.length}<span class="text-xs text-slate-500"> / 90 Days</span>`;
+            document.getElementById('statBalance').innerText = `$${balance.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+            document.getElementById('statWinRate').innerText = `${winRate}%`;
+            document.getElementById('statStreak').innerText = `${streak} Days`;
+            document.getElementById('statInfractions').innerText = infractions;
+            
+            let streakEl = document.getElementById('statStreak');
+            if (infractions > 0) { streakEl.classList.replace('text-teal-400', 'text-amber-500'); }
+
+            // Table Elements Rendering
+            if(db.length === 0) {
+                document.getElementById('tableContainer').innerHTML = `<div class="text-center py-12 text-slate-500 text-xs uppercase tracking-wider">No parameters logged. Initialize training matrix.</div>`;
+                return;
+            }
+
+            let html = `<table class="w-full text-left text-xs font-mono">
+                <thead>
+                    <tr class="border-b border-slate-800 text-slate-400 uppercase tracking-wider text-[10px]">
+                        <th class="pb-3">ID</th><th class="pb-3">Date/Time</th><th class="pb-3">Range (H/L)</th><th class="pb-3">Sweep</th><th class="pb-3">MSS/FVG</th><th class="pb-3">Outcome</th><th class="pb-3 text-right">Protocol</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/50">`;
+
+            db.forEach((log) => {
+                html += `<tr class="hover:bg-slate-950/40 transition">
+                    <td class="py-3.5 font-bold text-white">${log.id}</td>
+                    <td class="py-3.5 text-slate-300">${log.date} <span class="text-[10px] text-slate-500">${log.timestamp}</span></td>
+                    <td class="py-3.5 text-slate-400">$${log.asianHigh} / $${log.asianLow}</td>
+                    <td class="py-3.5"><span class="px-2 py-0.5 rounded text-[10px] ${log.sweepStatus === 'No Sweep' ? 'bg-slate-800 text-slate-400' : 'bg-teal-500/10 text-teal-400'}">${log.sweepStatus}</span></td>
+                    <td class="py-3.5 text-slate-300">MSS: ${log.mssPrinted} | FVG: {${log.fvgPresence}}</td>
+                    <td class="py-3.5"><span class="font-bold ${log.outcome.includes('Win') ? 'text-emerald-400' : log.outcome.includes('Loss') ? 'text-rose-400' : 'text-slate-500'}">${log.outcome}</span></td>
+                    <td class="py-3.5 text-right"><span class="text-[10px] px-2 py-0.5 rounded font-sans font-bold ${log.infraction === 'Pass' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'}">${log.infraction}</span></td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            document.getElementById('tableContainer').innerHTML = html;
+        }
+
+        document.getElementById('logForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newLog = {
+                id: `Day ${db.length + 1}/90`,
+                date: document.getElementById('fDate').value,
+                asianHigh: parseFloat(document.getElementById('fHigh').value).toFixed(2),
+                asianLow: parseFloat(document.getElementById('fLow').value).toFixed(2),
+                sweepStatus: document.getElementById('fSweep').value,
+                mssPrinted: document.getElementById('fMss').value,
+                fvgPresence: document.getElementById('fFvg').value,
+                outcome: document.getElementById('fOutcome').value,
+                infraction: document.getElementById('fInfraction').value,
+                timestamp: new Date().toLocaleTimeString('en-US', { hour12: false })
+            };
+            db.unshift(newLog);
+            this.reset();
+            document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+            renderAll();
+        });
+
+        function clearDB() {
+            if (confirm("CRITICAL WARNING: Purge historical system database?")) { db = []; renderAll(); }
+        }
+
+        renderAll();
+    </script>
+</body>
+</html>

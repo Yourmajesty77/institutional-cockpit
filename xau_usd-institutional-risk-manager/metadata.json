@@ -1,0 +1,6 @@
+{
+  "name": "XAU/USD Institutional Risk Manager",
+  "description": "Automated data-logging system and risk manager tracking a 90-day observation protocol for London reversal strategies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
